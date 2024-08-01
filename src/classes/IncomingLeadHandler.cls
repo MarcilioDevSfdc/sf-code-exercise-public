@@ -19,7 +19,17 @@ public with sharing class IncomingLeadHandler implements IHandleMessages {
      * @throws ArgumentException if the lead is missing a FirstName.
      */
     public void handleMessage(String channel, Object data) {
-        // TODO: Complete this method
+
+        ArgumentNullException.throwIfNull(channel, CHANNEL_PARAM);
+
+        if (!(data instanceof Lead)) {
+            throw new ArgumentException(INVALID_LEAD_ERROR);
+        }
+
+        Lead lead = (Lead) data;
+        handleValidateLead(lead);
+        
+        Database.insert(lead);
     }
 
     /**
@@ -27,6 +37,16 @@ public with sharing class IncomingLeadHandler implements IHandleMessages {
      * @return A List<String> of channel names this implementation is subscribed to.
      */
     public List<String> getSubscribedChannels() {
-        // TODO: Complete this method
+        return new List<String>{ INCOMING_LEAD_CHANNEL };
+    }
+
+     /**
+     * @description Validate lead business logic.
+     * @param lead the lead to validate.
+     */
+    private void handleValidateLead(Lead lead) {
+        if (String.isEmpty(lead.FirstName)) {
+            throw new ArgumentException(INVALID_LEAD_ERROR);
+        }
     }
 }

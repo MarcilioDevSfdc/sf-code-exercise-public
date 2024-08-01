@@ -20,6 +20,7 @@ private class PubSubServiceTest {
 
         Lead testLead = new Lead(
                 FirstName = 'TestLead',
+                Company = 'ISC2',
                 LastName = 'Tester');
 
         IHandleMessages testHandler = new IncomingContactHandler();

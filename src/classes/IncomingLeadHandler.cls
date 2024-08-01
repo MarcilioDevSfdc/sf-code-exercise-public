@@ -45,7 +45,7 @@ public with sharing class IncomingLeadHandler implements IHandleMessages {
      * @param lead the lead to validate.
      */
     private void handleValidateLead(Lead lead) {
-        if (String.isEmpty(lead.FirstName)) {
+        if (String.isBlank(lead.FirstName)) {
             throw new ArgumentException(INVALID_LEAD_ERROR);
         }
     }
